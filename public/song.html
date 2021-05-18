@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet" href="styles/bootstrap-material-design.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <title> AIMusician </title>
+</head>
+
+<body>
+
+<nav class="navbar fixed-top">
+    <a class="navbar-brand" href="/"> AIMusician </a>
+    <div class="dropdown pull-xs-right">
+        <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="lr1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="material-icons"> more_vert </i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="lr1">
+            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalNewSong"> <i class="material-icons mr-2"> add </i> New Song </button>
+            <button class="dropdown-item" type="button" id="buttonEditSong" data-toggle="modal" data-target="#modealEditSong"> <i class="material-icons mr-2"> edit </i> Edit Song </button>
+            <button class="dropdown-item" type="button" id="buttonSettings"> <i class="material-icons mr-2"> settings </i> Settings </button>
+            <button class="dropdown-item" type="button" id="buttonSignOut"> <i class="material-icons mr-2"> login </i> Sign Out </button>
+        </div>
+    </div>
+</nav>
+
+<main class="container" id="songPage">
+    <div id="song-info" class="flex-column px-5 pb-2">
+        <h4 class="text-center" id="song-title"> Song Name </h4>
+        <h5 class="text-center" id="song-composer"> Composer </h5>
+    </div>
+
+    <div id="song-container"> </div>
+    <button id="buttonPlaySong"> Play </button>
+</main>
+
+<footer>
+
+        <button class="btn bmd-btn-icon" type="button">
+            <i class="material-icons"> play_arrow </i>
+        </button>
+
+        <div>
+            <label for="inputBPM"> BPM </label>
+            <input id="inputBPM" type="number" placeholder="BPM">
+        </div>
+
+        <button class="btn bmd-btn-icon" type="button">
+            <i class="material-icons"> stop </i>
+        </button>
+
+</footer>
+
+<div class="modal fade" id="modalNewSong" tabindex="-1" role="dialog" aria-label="New song modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Create a new song </h5>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group bmd-form-group">
+                    <label for="inputTitle"> Title: </label>
+                    <input type="text" class="form-control" id="inputTitle" placeholder="Song title">
+                </div>
+                <div class="form-group bmd-form-group">
+                    <label for="inputComposer"> Composer: </label>
+                    <input type="text" class="form-control" id="inputComposer" placeholder="Song composer">
+                </div>
+                <div class="form-group bmd-form-group">
+                    <label for="inputLength"> Length </label>
+                    <input type="number" class="form-control" id="inputLength" placeholder="Song length">
+                </div>
+                <div class="form-group bmd-form-group">
+                    <label for="inputTempo"> BPM: </label>
+                    <input type="number" class="form-control" id="inputTempo" placeholder="Song tempo">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal"> CANCEL </button>
+                <button id="buttonCreateSong" type="button" class="btn" data-dismiss="modal"> CREATE </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/popper.js"></script>
+<script src="scripts/bootstrap-material-design.js"></script>
+<script>$("body").bootstrapMaterialDesign();</script>
+
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+
+<!--<script src="/__/firebase/7.18.0/firebase-app.js"></script>-->
+<!--<script src="/__/firebase/7.18.0/firebase-analytics.js"></script>-->
+<!--<script src="/__/firebase/7.18.0/firebase-auth.js"></script>-->
+<!--<script src="/__/firebase/7.18.0/firebase-firestore.js"></script>-->
+<script src="/__/firebase/init.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.17/Tone.js"></script>
+<script src="scripts/theory.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+
+</html>

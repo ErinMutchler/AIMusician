@@ -1,0 +1,142 @@
+
+.dropdown-menu {
+    left: -128px
+}
+
+#input-search-list {
+    border-radius: 12px;
+    width: 100%;
+    padding: 6px 20px;
+    height: 2em;
+}
+
+#input-search-list:focus {
+    outline: none;
+}
+
+#buttonEditSong {
+
+}
+
+html, body {
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    margin-top: 80px;
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    background-color: #cdcdcd;
+}
+
+#inputBPM {
+    width: 60px;
+}
+
+.stave {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.measure {
+    width: 24%;
+    display: flex;
+}
+
+.bar-line {
+    height: 60px;
+    border: solid 1px black;
+}
+
+@media (min-width: 576px) {
+    .beat {
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 768px) {
+    .bar-line {
+        height: 70px;
+    }
+    .beat {
+        font-size: 22px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .beat {
+        font-size: 28px;
+    }
+}
+
+.beat {
+    padding-left: 3px;
+    width: 25%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    white-space: nowrap;
+    border: none;
+    background-color: transparent;
+}
+
+
+
+#editSymbolsModal {
+    width: 100%;
+    display: grid;
+    grid-template-rows: repeat(3, 33.3%);
+    grid-template-columns: repeat(8, 12.5%);
+    justify-content: center;
+    align-content: center;
+    position: fixed;
+    bottom: 0px;
+}
+
+.edit-item {
+    background-color: #ffffff;
+    border: 1px solid black;
+    cursor: pointer;
+    display: flex;
+    padding: 5px;
+}
+
+.edit-item > span {
+    font-size: 2em;
+    margin: auto;
+}
+
+@media (min-width: 576px) {
+    #editSymbolsModal {
+        grid-template-rows: repeat(3, 33.3%);
+        grid-template-columns: repeat(8, 12.5%);
+    }
+}
+
+@media (min-width: 768px) {
+    #editSymbolsModal {
+        grid-template-rows: repeat(2, 50%);
+        grid-template-columns: repeat(12, 8.3%);
+    }
+}
+
+@media (min-width: 1200px) {
+    #editSymbolsModal {
+        grid-template-rows: 100%;
+        grid-template-columns: repeat(24, 4.16%);
+    }
+}

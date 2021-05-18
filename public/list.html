@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet" href="styles/bootstrap-material-design.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <title> AIMusician </title>
+</head>
+
+<body>
+
+<nav class="navbar fixed-top">
+    <a class="navbar-brand" href="/"> AIMusician </a>
+    <div class="dropdown pull-xs-right">
+        <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="lr1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="material-icons"> more_vert </i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="lr1">
+            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalNewSong"> <i class="material-icons mr-2"> add </i> New Song </button>
+            <button class="dropdown-item" type="button" id="buttonSettings"> <i class="material-icons mr-2"> settings </i> Settings </button>
+            <button class="dropdown-item" type="button" id="buttonSignOut"> <i class="material-icons mr-2"> login </i> Sign Out </button>
+        </div>
+    </div>
+</nav>
+
+<main class="container" id="listPage">
+    <div class="row">
+        <div class="form-inline col-sm-8">
+            <input id="input-search-list" type="search" placeholder="Search" aria-label="Search">
+        </div>
+
+        <div class="d-flex col-sm-4 justify-content-center">
+            <button class="btn" type="button" id="buttonShowAllSongs"> All Songs </button>
+            <button class="btn" type="button" id="buttonShowMySongs"> My Songs </button>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="d-flex justify-content-between">
+        <button class="btn d-flex align-items-center buttonSortBy" type="button" data-state="active" data-order-by="title">
+            <h3 class="p-0 m-0"> Song </h3>
+            <i class="material-icons d-block"> arrow_drop_down </i>
+        </button>
+
+        <button class="btn d-flex align-items-center buttonSortBy" type="button" data-state="inactive" data-order-by="composer">
+            <h3 class="p-0 m-0"> Composer </h3>
+            <i class="material-icons d-none"> arrow_drop_down </i>
+        </button>
+    </div>
+
+    <div id="song-list" class="list-group">
+    </div>
+</main>
+
+
+<div class="modal fade" id="modalNewSong" tabindex="-1" role="dialog" aria-label="New song modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Create a new song </h5>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group bmd-form-group">
+                    <label for="inputTitle"> Title: </label>
+                    <input type="text" class="form-control inputNewSong" id="inputTitle" placeholder="Song title">
+                </div>
+                <div class="form-group bmd-form-group">
+                    <label for="inputComposer"> Composer: </label>
+                    <input type="text" class="form-control inputNewSong" id="inputComposer" placeholder="Song composer">
+                </div>
+                <div class="form-group bmd-form-group">
+                    <label for="inputLength"> Length </label>
+                    <input type="number" class="form-control inputNewSong" id="inputLength" placeholder="Song length">
+                </div>
+                <div class="form-group bmd-form-group">
+                    <label for="inputTempo"> BPM: </label>
+                    <input type="number" class="form-control inputNewSong" id="inputTempo" placeholder="Song tempo">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal"> CANCEL </button>
+                <button id="buttonCreateSong" type="button" class="btn" data-dismiss="modal"> CREATE </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/popper.js"></script>
+<script src="scripts/bootstrap-material-design.js"></script>
+<!--<script>$("body").bootstrapMaterialDesign();</script>-->
+
+
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+
+<!--<script src="/__/firebase/7.18.0/firebase-app.js"></script>-->
+<!--<script src="/__/firebase/7.18.0/firebase-analytics.js"></script>-->
+<!--<script src="/__/firebase/7.18.0/firebase-auth.js"></script>-->
+<!--<script src="/__/firebase/7.18.0/firebase-firestore.js"></script>-->
+<script src="/__/firebase/init.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>
