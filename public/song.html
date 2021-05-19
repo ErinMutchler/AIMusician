@@ -20,8 +20,8 @@
         </button>
         <div class="dropdown-menu" aria-labelledby="lr1">
             <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalNewSong"> <i class="material-icons mr-2"> add </i> New Song </button>
-            <button class="dropdown-item" type="button" id="buttonEditSong" data-toggle="modal" data-target="#modealEditSong"> <i class="material-icons mr-2"> edit </i> Edit Song </button>
-            <button class="dropdown-item" type="button" id="buttonSettings"> <i class="material-icons mr-2"> settings </i> Settings </button>
+            <button class="dropdown-item" type="button" id="buttonEditMode"> <i class="material-icons mr-2"> edit </i> Edit Mode </button>
+            <button class="dropdown-item" type="button" id="buttonPerformanceMode"> <i class="material-icons mr-2"> speaker </i> Performance Mode </button>
             <button class="dropdown-item" type="button" id="buttonSignOut"> <i class="material-icons mr-2"> login </i> Sign Out </button>
         </div>
     </div>
@@ -34,24 +34,21 @@
     </div>
 
     <div id="song-container"> </div>
-    <button id="buttonPlaySong"> Play </button>
 </main>
 
 <footer>
+    <button class="btn bmd-btn-icon" type="button" id="buttonPlaySong">
+        <i class="material-icons"> play_arrow </i>
+    </button>
 
-        <button class="btn bmd-btn-icon" type="button">
-            <i class="material-icons"> play_arrow </i>
-        </button>
+    <div class="mx-2">
+        <label for="inputBPM"> BPM </label>
+        <input id="inputBPM" type="number" placeholder="BPM">
+    </div>
 
-        <div>
-            <label for="inputBPM"> BPM </label>
-            <input id="inputBPM" type="number" placeholder="BPM">
-        </div>
-
-        <button class="btn bmd-btn-icon" type="button">
-            <i class="material-icons"> stop </i>
-        </button>
-
+    <button class="btn bmd-btn-icon" type="button" id="buttonStopSong">
+        <i class="material-icons"> stop </i>
+    </button>
 </footer>
 
 <div class="modal fade" id="modalNewSong" tabindex="-1" role="dialog" aria-label="New song modal" aria-hidden="true">

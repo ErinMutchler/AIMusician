@@ -297,9 +297,10 @@ theory.Chord = class {
 
 musician.BassPlayer = class {
   constructor() {
+    this.synth = new Tone.Synth().toDestination();
   }
 
-  playSong(chords) {
+  playSong(chords, bpm) {
     let line = [];
     chords.forEach((chord, index) => {
       const nextChord = chords[(index + 1) % chords.length];
@@ -358,22 +359,24 @@ musician.BassPlayer = class {
     });
 
     const now = Tone.now()
-    Tone.Transport.bpm.value = 110;
-    const synth = new Tone.Synth().toDestination();
-
-    const AMinorScale = ['F3', 'A3', 'C4', 'B3', 'Bb3', 'D4', 'Eb4', 'E4'];
+    Tone.Transport.bpm.value = bpm;
     let time = Tone.now();
 
     Tone.Transport.start();
 
+    this.synth = new Tone.Synth().toDestination();
+
     line.forEach((note, index) => {
       let str = note.symbol.replace("♭", "b").replace("♯", "#").replace("♮", "");
       console.log(note.symbol);
-      synth.triggerAttackRelease(str + "4", "4n", time);
+      this.synth.triggerAttackRelease(str + "3", "4n", time);
       time = time + Tone.Time("4n");
-
     });
 
+  }
+
+  stopSong() {
+    this.synth.dispose();
   }
 
   LT(chord) {
@@ -414,8 +417,18 @@ theory.MODE_SYMBOLS = {
   ["-♭2♭6"]: "PHRYGIAN", ["-7♭2♭6"]: "PHRYGIAN", ["-11♭2♭6"]: "PHRYGIAN", ["-♭2♭13"]: "PHRYGIAN",  ["-7♭2♭13"]: "PHRYGIAN", ["-11♭2♭13"]: "PHRYGIAN",  ["-♭6♭9"]: "PHRYGIAN",  ["-7♭6♭9"]: "PHRYGIAN",  ["-11♭6♭9"]: "PHRYGIAN",
   ["Δ♯11"]: "LYDIAN", ["Δ6♯11"]: "LYDIAN", ["Δ7♯11"]: "LYDIAN", ["Δ9♯11"]: "LYDIAN", ["Δ13♯11"]: "LYDIAN", ["Δ♯4"]: "LYDIAN", ["Δ6♯4"]: "LYDIAN", ["Δ7♯4"]: "LYDIAN", ["Δ9♯4"]: "LYDIAN", ["Δ13♯4"]: "LYDIAN",
   ["7"]: "MIXOLYDIAN", ["9"]: "MIXOLYDIAN", ["13"]: "MIXOLYDIAN",
-  ["AEOLIAN"]: "-♭6", ["AEOLIAN"]: "-7♭6", ["AEOLIAN"]: "-9♭6", ["AEOLIAN"]: "-11♭6", ["AEOLIAN"]: "-♭13", ["AEOLIAN"]: "-7♭13", ["AEOLIAN"]: "-9♭13", ["AEOLIAN"]: "-11♭13",
-  ["LOCRIAN"]: "",
+  ["-♭6"]: "AEOLIAN", ["-7♭6"]: "AEOLIAN", ["-9♭6"]: "AEOLIAN", ["-11♭6"]: "AEOLIAN", ["-♭13"]: "AEOLIAN", ["-7♭13"]: "AEOLIAN", ["-9♭13"]: "AEOLIAN", ["-11♭13"]: "AEOLIAN",
+  ["TODO: LOCRIAN SYMBOL HERE"]: "LOCRIAN",
+
+  ["-Δ♭6"]: "AEOLIAN ♮7", ["-Δ♭13"]: "AEOLIAN ♮7", ["-Δ7♭6"]: "AEOLIAN ♮7", ["-Δ7♭13"]: "AEOLIAN ♮7", ["-Δ9♭6"]: "AEOLIAN ♮7", ["-Δ9♭13"]: "AEOLIAN ♮7", ["-Δ11♭6"]: "AEOLIAN ♮7", ["-Δ11♭13"]: "AEOLIAN ♮7",
+  ["TODO: LOCRIAN OTHER SYMBOL HERE"]: "LOCRIAN OTHER",
+  ["Δ+"]: "IONIAN ♯5", ["Δ+6"]: "IONIAN ♯5", ["Δ+7"]: "IONIAN ♯5", ["Δ+9"]: "IONIAN ♯5", ["Δ+11"]: "IONIAN ♯5", ["Δ+13"]: "IONIAN ♯5",
+  ["-♯4"]: "DORIAN ♯4", ["-♯11"]: "DORIAN ♯4", ["-6♯4"]: "DORIAN ♯4", ["-6♯11"]: "DORIAN ♯4", ["-7♯4"]: "DORIAN ♯4", ["-7♯11"]: "DORIAN ♯4", ["-9♯4"]: "DORIAN ♯4", ["-9♯11"]: "DORIAN ♯4", ["-13♯4"]: "DORIAN ♯4", ["-13♯11"]: "DORIAN ♯4",
+  ["-♭2♭6♮3"]: "PHRYGIAN ♮3", ["-7♭2♭6♮3"]: "PHRYGIAN ♮3", ["-11♭2♭6♮3"]: "PHRYGIAN ♮3", ["-♭2♭13♮3"]: "PHRYGIAN ♮3", ["-7♭2♭13♮3"]: "PHRYGIAN ♮3", ["-11♭2♭13♮3"]: "PHRYGIAN ♮3", ["-♭6♭9♮3"]: "PHRYGIAN ♮3", ["-7♭6♭9♮3"]: "PHRYGIAN ♮3", ["-11♭6♭9♮3"]: "PHRYGIAN ♮3",
+  ["Δ♯2♯11"]: "LYDIAN ♯2", ["Δ♯9♯11"]: "LYDIAN ♯2", ["Δ6♯2♯11"]: "LYDIAN ♯2", ["Δ6♯9♯11"]: "LYDIAN ♯2", ["Δ7♯2♯11"]: "LYDIAN ♯2", ["Δ7♯9♯11"]: "LYDIAN ♯2", ["Δ13♯2♯11"]: "LYDIAN ♯2", ["Δ13♯11"]: "LYDIAN ♯2", ["Δ♯2♯4"]: "LYDIAN ♯2", ["Δ♯4♯9"]: "LYDIAN ♯2", ["Δ6♯2♯4"]: "LYDIAN ♯2", ["Δ6♯4♯9"]: "LYDIAN ♯2", ["Δ7♯2♯4"]: "LYDIAN ♯2", ["Δ7♯4♯9"]: "LYDIAN ♯2", ["Δ13♯2♯4"]: "LYDIAN ♯2", ["Δ13♯9♯4"]: "LYDIAN ♯2",
+
+  ["-Δ"]: "Dorian ♮7", ["-Δ6"]: "Dorian ♮7", ["-Δ7"]: "Dorian ♮7", ["-Δ9"]: "Dorian ♮7", ["-Δ11"]: "Dorian ♮7", ["-Δ13"]: "Dorian ♮7",
+  
 }
 
 theory.INTERVALS = {

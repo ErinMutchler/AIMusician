@@ -2,6 +2,7 @@ var aim = aim || {};
 
 aim.songManager = null;
 aim.songListManager = null;
+aim.bassPlayer = null;
 
 function htmlToElement(html) {
 	let template = document.createElement('template');
@@ -210,23 +211,42 @@ aim.SongListManager = class {
 aim.SongPageController = class {
 	constructor() {
 		this.selectedBeat = null;
+		aim.bassPlayer = new musician.BassPlayer();
 
-		document.getElementById("buttonEditSong").onclick = (event) => {
+		document.getElementById("buttonEditMode").onclick = (event) => {
 			if (aim.authManager.uid === aim.songManager.author) {
+				document.getElementById("buttonPerformanceMode").style.display = "block";
+				document.getElementById("buttonEditMode").style.display = "none";
+				document.querySelector(".dropdown-menu").style.left = "-180px";
+
 				document.querySelectorAll(".beat").forEach((beat) => {
-					beat.disabled = false;
+					beat.contentEditable = "true";
+				});
+			}
+		};
+
+		document.getElementById("buttonPerformanceMode").onclick = (event) => {
+			if (aim.authManager.uid === aim.songManager.author) {
+				document.getElementById("buttonPerformanceMode").style.display = "none";
+				document.getElementById("buttonEditMode").style.display = "block";
+				document.querySelector(".dropdown-menu").style.left = "-128px";
+				document.querySelectorAll(".beat").forEach((beat) => {
+					beat.contentEditable = "false";
 				});
 			}
 		};
 
 		document.getElementById("buttonPlaySong").onclick = (event) => {
-			let player = new musician.BassPlayer();
-			player.playSong(aim.songManager.songToTheoryChords());
+			aim.bassPlayer.playSong(aim.songManager.songToTheoryChords(), document.getElementById("inputBPM").value);
+		};
+
+		document.getElementById("buttonStopSong").onclick = (event) => {
+			aim.bassPlayer.stopSong();
 		};
 
 		document.getElementById("inputBPM").oninput = (event) => {
-
-		}
+			// TODO: link to bpm
+		};
 
 		aim.songManager.beginListening(this.updateView.bind(this));
 	}
@@ -237,6 +257,10 @@ aim.SongPageController = class {
 		this._populateMetadata();
 
 		document.getElementById("inputBPM").value = aim.songManager.tempo;
+
+		if (aim.authManager.uid === aim.songManager.author) {
+			document.getElementById("buttonEditMode").style.display = "block";
+		}
 	}
 
 	_populateMetadata() {
@@ -251,7 +275,7 @@ aim.SongPageController = class {
 			const beats = measure.children;
 
 			for (let j = 0; j < beats.length; ++j) {
-				beats.item(j).value = aim.songManager.getChord(i, j);
+				beats.item(j).textContent = aim.songManager.getChord(i, j);
 			}
 		}
 	}
@@ -287,21 +311,14 @@ aim.SongPageController = class {
 	}
 
 	_newBeat(value) {
-		const beat = document.createElement("input");
+		const beat = document.createElement("div");
 		beat.classList.add("beat");
 		beat.dataset.value = value + "";
-		beat.disabled = true;
-		beat.onclick = (event) => {
-			if (this._editMode) {
-				this.selectedBeat = beat;
-			}
-		};
-
+		beat.contentEditable = "false";
 		beat.oninput = (event) => {
-			beat.value = this._replaceSymbols(beat.value);
-			aim.songManager.updateChord(beat.parentElement.dataset.value, beat.dataset.value, beat.value);
+			beat.textContent = this._replaceSymbols(beat.textContent);
+			aim.songManager.updateChord(beat.parentElement.dataset.value, beat.dataset.value, beat.textContent);
 		}
-
 		return beat;
 	}
 

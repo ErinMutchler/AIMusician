@@ -14,10 +14,6 @@
     outline: none;
 }
 
-#buttonEditSong {
-
-}
-
 html, body {
     height: 100%;
 }
@@ -139,4 +135,8 @@ footer {
         grid-template-rows: 100%;
         grid-template-columns: repeat(24, 4.16%);
     }
+}
+
+#buttonEditMode, #buttonPerformanceMode {
+    display: none;
 }
