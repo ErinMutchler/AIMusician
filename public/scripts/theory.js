@@ -427,8 +427,19 @@ theory.MODE_SYMBOLS = {
   ["-♭2♭6♮3"]: "PHRYGIAN ♮3", ["-7♭2♭6♮3"]: "PHRYGIAN ♮3", ["-11♭2♭6♮3"]: "PHRYGIAN ♮3", ["-♭2♭13♮3"]: "PHRYGIAN ♮3", ["-7♭2♭13♮3"]: "PHRYGIAN ♮3", ["-11♭2♭13♮3"]: "PHRYGIAN ♮3", ["-♭6♭9♮3"]: "PHRYGIAN ♮3", ["-7♭6♭9♮3"]: "PHRYGIAN ♮3", ["-11♭6♭9♮3"]: "PHRYGIAN ♮3",
   ["Δ♯2♯11"]: "LYDIAN ♯2", ["Δ♯9♯11"]: "LYDIAN ♯2", ["Δ6♯2♯11"]: "LYDIAN ♯2", ["Δ6♯9♯11"]: "LYDIAN ♯2", ["Δ7♯2♯11"]: "LYDIAN ♯2", ["Δ7♯9♯11"]: "LYDIAN ♯2", ["Δ13♯2♯11"]: "LYDIAN ♯2", ["Δ13♯11"]: "LYDIAN ♯2", ["Δ♯2♯4"]: "LYDIAN ♯2", ["Δ♯4♯9"]: "LYDIAN ♯2", ["Δ6♯2♯4"]: "LYDIAN ♯2", ["Δ6♯4♯9"]: "LYDIAN ♯2", ["Δ7♯2♯4"]: "LYDIAN ♯2", ["Δ7♯4♯9"]: "LYDIAN ♯2", ["Δ13♯2♯4"]: "LYDIAN ♯2", ["Δ13♯9♯4"]: "LYDIAN ♯2",
 
-  ["-Δ"]: "Dorian ♮7", ["-Δ6"]: "Dorian ♮7", ["-Δ7"]: "Dorian ♮7", ["-Δ9"]: "Dorian ♮7", ["-Δ11"]: "Dorian ♮7", ["-Δ13"]: "Dorian ♮7",
-  
+  ["-Δ"]: "DORIAN ♮7", ["-Δ6"]: "DORIAN ♮7", ["-Δ7"]: "DORIAN ♮7", ["-Δ9"]: "DORIAN ♮7", ["-Δ11"]: "DORIAN ♮7", ["-Δ13"]: "DORIAN ♮7",
+  ["-♭2"]: "PHRYGIAN ♮6", ["-♭9"]: "PHRYGIAN ♮6", ["-♭2♮6"]: "PHRYGIAN ♮6", ["-♭9♮6"]: "PHRYGIAN ♮6", ["-♭2♮13"]: "PHRYGIAN ♮6", ["-♭9♮13"]: "PHRYGIAN ♮6", ["-7♭2"]: "PHRYGIAN ♮6", ["-7♭9"]: "PHRYGIAN ♮6", ["-7♭2♮6"]: "PHRYGIAN ♮6", ["-7♭9♮6"]: "PHRYGIAN ♮6", ["-7♭2♮13"]: "PHRYGIAN ♮6", ["-7♭9♮13"]: "PHRYGIAN ♮6", ["-11♭2"]: "PHRYGIAN ♮6", ["-11♭9"]: "PHRYGIAN ♮6", ["-11♭2♮6"]: "PHRYGIAN ♮6", ["-11♭9♮6"]: "PHRYGIAN ♮6", ["-11♭2♮13"]: "PHRYGIAN ♮6", ["-11♭9♮13"]: "PHRYGIAN ♮6",
+  ["Δ♯11♯5"]: "LYDIAN ♯5", ["Δ7♯11♯5"]: "LYDIAN ♯5", ["Δ9♯11♯5"]: "LYDIAN ♯5", ["Δ♯4♯5"]: "LYDIAN ♯5", ["Δ7♯4♯5"]: "LYDIAN ♯5", ["Δ+9♯4"]: "LYDIAN ♯5", ["Δ9♯4♯5"]: "LYDIAN ♯5", ["Δ+9♯11"]: "LYDIAN ♯5", ["Δ+♯11"]: "LYDIAN ♯5", ["Δ+7♯11"]: "LYDIAN ♯5", ["Δ+♯4"]: "LYDIAN ♯5", ["Δ+7♯4"]: "LYDIAN ♯5",
+  ["7♯4"]: "MIXOLYDIAN ♯4", ["9♯4"]: "MIXOLYDIAN ♯4", ["13♯4"]: "MIXOLYDIAN ♯4", ["7♯11"]: "MIXOLYDIAN ♯4", ["9♯11"]: "MIXOLYDIAN ♯4", ["13♯11"]: "MIXOLYDIAN ♯4",
+  ["7♭6"]: "MIXOLYDIAN ♭6", ["9♭6"]: "MIXOLYDIAN ♭6", ["7♭13"]: "MIXOLYDIAN ♭6", ["9♭13"]: "MIXOLYDIAN ♭6",
+
+  ["∅"]: "LOCRIAN ♮2", ["∅7"]: "LOCRIAN ♮2", ["∅9"]: "LOCRIAN ♮2", ["-7♭5"]: "LOCRIAN ♮2", ["-9♭5"]: "LOCRIAN ♮2",
+  ["Δ♭6"]: "IONIAN ♭6", ["Δ♭13"]: "IONIAN ♭6", ["Δ7♭6"]: "IONIAN ♭6", ["Δ7♭13"]: "IONIAN ♭6", ["Δ9♭6"]: "IONIAN ♭6", ["Δ9♭13"]: "IONIAN ♭6", ["Δ11♭6"]: "IONIAN ♭6", ["Δ11♭13"]: "IONIAN ♭6",
+  ["-♭5"]: "DORIAN ♭5", ["-6♭5"]: "DORIAN ♭5", ["-7♭5"]: "DORIAN ♭5", ["-9♭5"]: "DORIAN ♭5", ["-13♭5"]: "DORIAN ♭5",
+  ["-♭2♭4♭6"]: "PHRYGIAN ♭4", ["-♭2♭6♭11"]: "PHRYGIAN ♭4", ["-7♭2♭4♭6"]: "PHRYGIAN ♭4", ["-7♭2♭6♭11"]: "PHRYGIAN ♭4", ["-♭2♭4♭13"]: "PHRYGIAN ♭4", ["-♭2♭11♭13"]: "PHRYGIAN ♭4", ["-7♭2♭4♭13"]: "PHRYGIAN ♭4", ["-7♭2♭11♭13"]: "PHRYGIAN ♭4", ["-♭6♭4♭9"]: "PHRYGIAN ♭4", ["-♭6♭9♭11"]: "PHRYGIAN ♭4", ["-7♭6♭4♭9"]: "PHRYGIAN ♭4", ["-7♭6♭9♭11"]: "PHRYGIAN ♭4",
+  ["-Δ♯4"]: "DORIAN ♮7♯4", ["-Δ♯11"]: "DORIAN ♮7♯4", ["-Δ6♯4"]: "DORIAN ♮7♯4", ["-Δ6♯11"]: "DORIAN ♮7♯4", ["-Δ7♯4"]: "DORIAN ♮7♯4", ["-Δ7♯11"]: "DORIAN ♮7♯4", ["-Δ9♯4"]: "DORIAN ♮7♯4", ["-Δ9♯11"]: "DORIAN ♮7♯4", ["-Δ13♯4"]: "DORIAN ♮7♯4", ["-Δ13♯11"]: "DORIAN ♮7♯4",
+  ["7♭2"]: "MIXOLYDIAN ♭2", ["7♭9"]: "MIXOLYDIAN ♭2", ["13♭2"]: "MIXOLYDIAN ♭2", ["13♭9"]: "MIXOLYDIAN ♭2",
+  ["Δ♯2♯11♯5"]: "LYDIAN ♯2♯5", ["Δ♯9♯11♯5"]: "LYDIAN ♯2♯5", ["Δ7♯2♯11♯5"]: "LYDIAN ♯2♯5", ["Δ7♯9♯11♯5"]: "LYDIAN ♯2♯5", ["Δ♯2♯4♯5"]: "LYDIAN ♯2♯5", ["Δ♯4♯5♯9"]: "LYDIAN ♯2♯5", ["Δ7♯2♯4♯5"]: "LYDIAN ♯2♯5", ["Δ7♯4♯5♯9"]: "LYDIAN ♯2♯5", ["Δ+♯2♯11"]: "LYDIAN ♯2♯5", ["Δ+♯9♯11"]: "LYDIAN ♯2♯5", ["Δ+7♯2♯11"]: "LYDIAN ♯2♯5", ["Δ+7♯9♯11"]: "LYDIAN ♯2♯5", ["Δ+♯2♯4"]: "LYDIAN ♯2♯5", ["Δ+♯4♯9"]: "LYDIAN ♯2♯5", ["Δ+7♯2♯4"]: "LYDIAN ♯2♯5", ["Δ+7♯4♯9"]: "LYDIAN ♯2♯5",
 }
 
 theory.INTERVALS = {
