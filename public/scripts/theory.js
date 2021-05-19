@@ -15,7 +15,7 @@ theory.Interval = class {
     ["m7"]: [10, 6], ["A6"]: [10, 5],
     ["M7"]: [11, 6], ["d8"]: [11, 7],
     ["P8"]: [12, 7], ["A7"]: [12, 6],
-  }
+  };
 
   constructor(string) {
     if (string in theory.Interval.INTERVAL_DEFINITIONS) {
@@ -297,85 +297,184 @@ theory.Chord = class {
 
 musician.BassPlayer = class {
   constructor() {
+
+    this.sampler = new Tone.Player("../assets/bass-samples/E1.mp3", () => {
+      console.log("Sampler Loaded");
+    });
+    this.sampler.toDestination();
+    this.audioBuffers = new Tone.ToneAudioBuffers({
+      urls: {
+        ["E1"]: "E1.mp3",
+        ["F1"]: "F1.mp3",
+        ["F#1"]: "F#1.mp3",
+        ["G1"]: "G1.mp3",
+        ["G#1"]: "G#1.mp3",
+        ["A1"]: "A1.mp3",
+        ["A#1"]: "A#1.mp3",
+        ["B1"]: "B1.mp3",
+        ["C2"]: "C2.mp3",
+        ["C#2"]: "C#2.mp3",
+        ["D2"]: "D2.mp3",
+        ["D#2"]: "D#2.mp3",
+        ["E2"]: "E2.mp3",
+        ["F2"]: "F2.mp3",
+        ["F#2"]: "F#2.mp3",
+        ["G2"]: "G2.mp3",
+        ["G#2"]: "G#2.mp3",
+        ["A2"]: "A2.mp3",
+        ["A#2"]: "A#2.mp3",
+        ["B2"]: "B2.mp3",
+        ["C3"]: "C3.mp3",
+        ["C#3"]: "C#3.mp3",
+        ["D3"]: "D3.mp3",
+        ["D#3"]: "D#3.mp3",
+        ["E3"]: "E3.mp3",
+        ["F3"]: "F3.mp3",
+        ["F#3"]: "F#3.mp3",
+        ["G3"]: "G3.mp3",
+        ["G#3"]: "G#3.mp3",
+        ["A3"]: "A3.mp3",
+        ["A#3"]: "A#3.mp3",
+        ["B3"]: "B3.mp3",
+        ["C4"]: "C4.mp3",
+      },
+      onload: () => console.log("urls loaded"),
+      baseUrl: "https://erinmutchler.com/bass-samples/"
+    });
+    //
+    // this.players = new Tone.Players({
+    //   urls: {
+    //     ["E1"]: "E1.mp3",
+    //     ["F1"]: "F1.mp3",
+    //     ["F#1"]: "F#1.mp3",
+    //     ["G1"]: "G1.mp3",
+    //     ["G#1"]: "G#1.mp3",
+    //     ["A1"]: "A1.mp3",
+    //     ["A#1"]: "A#1.mp3",
+    //     ["B1"]: "B1.mp3",
+    //     ["C2"]: "C2.mp3",
+    //     ["C#2"]: "C#2.mp3",
+    //     ["D2"]: "D2.mp3",
+    //     ["D#2"]: "D#2.mp3",
+    //     ["E2"]: "E2.mp3",
+    //     ["F2"]: "F2.mp3",
+    //     ["F#2"]: "F#2.mp3",
+    //     ["G2"]: "G2.mp3",
+    //     ["G#2"]: "G#2.mp3",
+    //     ["A2"]: "A2.mp3",
+    //     ["A#2"]: "A#2.mp3",
+    //     ["B2"]: "B2.mp3",
+    //     ["C3"]: "C3.mp3",
+    //     ["C#3"]: "C#3.mp3",
+    //     ["D3"]: "D3.mp3",
+    //     ["D#3"]: "D#3.mp3",
+    //     ["E3"]: "E3.mp3",
+    //     ["F3"]: "F3.mp3",
+    //     ["F#3"]: "F#3.mp3",
+    //     ["G3"]: "G3.mp3",
+    //     ["G#3"]: "G#3.mp3",
+    //     ["A3"]: "A3.mp3",
+    //     ["A#3"]: "A#3.mp3",
+    //     ["B3"]: "B3.mp3",
+    //     ["C4"]: "C4.mp3",
+    //   },
+    //   baseUrl: "../assets/bass-samples/",
+    //   onload: () => {
+    //     console.log("done loading");
+    //   }
+    // }).toDestination();
+    this.isPlaying = false;
     this.synth = new Tone.Synth().toDestination();
   }
 
   playSong(chords, bpm) {
-    let line = [];
-    chords.forEach((chord, index) => {
-      const nextChord = chords[(index + 1) % chords.length];
-      let chordLine = [];
-      chordLine[0] = chord.root;
-      switch (chord.length) {
-        case 1:
-          break;
-        case 2:
-          chordLine[1] = this.LT(nextChord);
-          break;
-        case 3:
-          chordLine[2] = this.LT(nextChord);
-          chordLine[1] = this.NCT(chord, chordLine[2]);
-          break;
-        case 4:
-          chordLine[3] = this.LT(nextChord);
-          chordLine[2] = this.NCT(chord, chordLine[3]);
-          chordLine[1] = this.HB(chord, chordLine[0], chordLine[2]);
-          break;
-        case 5:
-          chordLine[4] = this.LT(nextChord);
-          chordLine[2] = this.NCT(chord, chordLine[4]);
-          chordLine[1] = this.HB(chord, chordLine[0], chordLine[2]);
-          chordLine[3] = this.HB(chord, chordLine[2], chordLine[4]);
-          break;
-        case 6:
-          chordLine[5] = this.LT(nextChord);
-          chordLine[4] = this.NCT(chord, chordLine[5]);
-          chordLine[2] = this.NCT(chord, chordLine[4]);
-          chordLine[1] = this.HB(chord, chordLine[0], chordLine[2]);
-          chordLine[3] = this.HB(chord, chordLine[2], chordLine[4]);
-          break;
-        case 7:
-          chordLine[6] = this.LT(nextChord);
-          chordLine[4] = this.NCT(chord, chordLine[6]);
-          chordLine[2] = this.NCT(chord, chordLine[4]);
-          chordLine[1] = this.HB(chord, chordLine[0], chordLine[2]);
-          chordLine[3] = this.HB(chord, chordLine[2], chordLine[4]);
-          chordLine[5] = this.HB(chord, chordLine[4], chordLine[6]);
-          break;
-        case 8:
-          chordLine[7] = this.LT(nextChord);
-          chordLine[6] = this.NCT(chord, chordLine[7]);
-          chordLine[4] = this.NCT(chord, chordLine[6]);
-          chordLine[2] = this.NCT(chord, chordLine[4]);
-          chordLine[1] = this.HB(chord, chordLine[0], chordLine[2]);
-          chordLine[3] = this.HB(chord, chordLine[2], chordLine[4]);
-          chordLine[5] = this.HB(chord, chordLine[4], chordLine[6]);
-          break;
-      }
+    this.sampler.start();
+    return;
 
-      chordLine.forEach((e) => {
-        line.push(e);
+    if (this.isPlaying) {
+      return;
+    }
+    try {
+      this.isPlaying = true;
+      let line = [];
+      chords.forEach((chord, index) => {
+        const nextChord = chords[(index + 1) % chords.length];
+        let chordLine = [];
+        chordLine[0] = chord.root;
+        switch (chord.length) {
+          case 1:
+            break;
+          case 2:
+            chordLine[1] = this.LT(nextChord);
+            break;
+          case 3:
+            chordLine[2] = this.LT(nextChord);
+            chordLine[1] = this.NCT(chord, chordLine[2]);
+            break;
+          case 4:
+            chordLine[3] = this.LT(nextChord);
+            chordLine[2] = this.NCT(chord, chordLine[3]);
+            chordLine[1] = this.HB(chord, chordLine[0], chordLine[2]);
+            break;
+          case 5:
+            chordLine[4] = this.LT(nextChord);
+            chordLine[2] = this.NCT(chord, chordLine[4]);
+            chordLine[1] = this.HB(chord, chordLine[0], chordLine[2]);
+            chordLine[3] = this.HB(chord, chordLine[2], chordLine[4]);
+            break;
+          case 6:
+            chordLine[5] = this.LT(nextChord);
+            chordLine[4] = this.NCT(chord, chordLine[5]);
+            chordLine[2] = this.NCT(chord, chordLine[4]);
+            chordLine[1] = this.HB(chord, chordLine[0], chordLine[2]);
+            chordLine[3] = this.HB(chord, chordLine[2], chordLine[4]);
+            break;
+          case 7:
+            chordLine[6] = this.LT(nextChord);
+            chordLine[4] = this.NCT(chord, chordLine[6]);
+            chordLine[2] = this.NCT(chord, chordLine[4]);
+            chordLine[1] = this.HB(chord, chordLine[0], chordLine[2]);
+            chordLine[3] = this.HB(chord, chordLine[2], chordLine[4]);
+            chordLine[5] = this.HB(chord, chordLine[4], chordLine[6]);
+            break;
+          case 8:
+            chordLine[7] = this.LT(nextChord);
+            chordLine[6] = this.NCT(chord, chordLine[7]);
+            chordLine[4] = this.NCT(chord, chordLine[6]);
+            chordLine[2] = this.NCT(chord, chordLine[4]);
+            chordLine[1] = this.HB(chord, chordLine[0], chordLine[2]);
+            chordLine[3] = this.HB(chord, chordLine[2], chordLine[4]);
+            chordLine[5] = this.HB(chord, chordLine[4], chordLine[6]);
+            break;
+        }
+
+        chordLine.forEach((e) => {
+          line.push(e);
+        });
       });
-    });
 
-    const now = Tone.now()
-    Tone.Transport.bpm.value = bpm;
-    let time = Tone.now();
+      const now = Tone.now()
+      Tone.Transport.bpm.value = bpm;
+      let time = Tone.now();
 
-    Tone.Transport.start();
+      Tone.Transport.start();
 
-    this.synth = new Tone.Synth().toDestination();
+      this.synth = new Tone.Synth().toDestination();
 
-    line.forEach((note, index) => {
-      let str = note.symbol.replace("♭", "b").replace("♯", "#").replace("♮", "");
-      console.log(note.symbol);
-      this.synth.triggerAttackRelease(str + "3", "4n", time);
-      time = time + Tone.Time("4n");
-    });
-
+      line.forEach((note, index) => {
+        let str = note.symbol.replace("♭", "b").replace("♯", "#").replace("♮", "");
+        console.log(note.symbol);
+        this.synth.triggerAttackRelease(str + "2", "4n", time);
+        time = time + Tone.Time("4n");
+      });
+    } catch (error) {
+      this.stopSong()
+      console.log(error);
+    }
   }
 
   stopSong() {
+    this.isPlaying = false;
     this.synth.dispose();
   }
 
@@ -384,14 +483,14 @@ musician.BassPlayer = class {
     leadingTones.push(chord.root.addInterval(theory.INTERVALS.m2));
     leadingTones.push(chord.root.subtractInterval(theory.INTERVALS.m2));
     leadingTones.push(chord.getNoteAtScaleDegree(2));
-    leadingTones.push(chord.getNoteAtScaleDegree(3));
+
     leadingTones.push(chord.getNoteAtScaleDegree(5));
     leadingTones.push(chord.getNoteAtScaleDegree(7));
     return leadingTones[Math.floor(Math.random() * leadingTones.length)];
   }
 
   NCT(chord, note) {
-    const chordTones = [chord.getNoteAtScaleDegree(1), chord.getNoteAtScaleDegree(2),
+    const chordTones = [chord.getNoteAtScaleDegree(1),
       chord.getNoteAtScaleDegree(3), chord.getNoteAtScaleDegree(5), chord.getNoteAtScaleDegree(6), chord.getNoteAtScaleDegree(7)];
     let nct = chordTones[0];
     chordTones.forEach((chordTone) => {
@@ -410,7 +509,6 @@ musician.BassPlayer = class {
   }
 }
 
-// TODO: fix chords below and add rest of them
 theory.MODE_SYMBOLS = {
   ["Δ"]: "IONIAN", ["Δ6"]: "IONIAN", ["Δ7"]: "IONIAN", ["Δ9"]: "IONIAN", ["Δ11"]: "IONIAN", ["Δ13"]: "IONIAN",
   ["-"]: "DORIAN",  ["-6"]: "DORIAN",  ["-7"]: "DORIAN",  ["-9"]: "DORIAN",  ["-11"]: "DORIAN", ["-13"]: "DORIAN",
@@ -491,4 +589,5 @@ theory.MODE_DICTIONARY = {
   ["LYDIAN ♯2"]: [theory.INTERVALS.P1, theory.INTERVALS.A2, theory.INTERVALS.M3, theory.INTERVALS.A4, theory.INTERVALS.P5, theory.INTERVALS.M6, theory.INTERVALS.M7],
   ["MIXOLYDIAN ♯1"]: [theory.INTERVALS.P1, theory.INTERVALS.m2, theory.INTERVALS.m3, theory.INTERVALS.d4, theory.INTERVALS.A5, theory.INTERVALS.m6, theory.INTERVALS.d7],
 }
+
 

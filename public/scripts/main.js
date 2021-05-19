@@ -215,10 +215,12 @@ aim.SongPageController = class {
 
 		document.getElementById("buttonEditMode").onclick = (event) => {
 			if (aim.authManager.uid === aim.songManager.author) {
+				console.log("Switching to edit mode");
 				document.getElementById("buttonPerformanceMode").style.display = "block";
 				document.getElementById("buttonEditMode").style.display = "none";
 				document.querySelector(".dropdown-menu").style.left = "-180px";
-
+				document.getElementById("song-title").contentEditable = "true";
+				document.getElementById("song-composer").contentEditable = "true";
 				document.querySelectorAll(".beat").forEach((beat) => {
 					beat.contentEditable = "true";
 				});
@@ -227,13 +229,24 @@ aim.SongPageController = class {
 
 		document.getElementById("buttonPerformanceMode").onclick = (event) => {
 			if (aim.authManager.uid === aim.songManager.author) {
+				console.log("Switching to performance mode");
 				document.getElementById("buttonPerformanceMode").style.display = "none";
 				document.getElementById("buttonEditMode").style.display = "block";
 				document.querySelector(".dropdown-menu").style.left = "-128px";
+				document.getElementById("song-title").contentEditable = "false";
+				document.getElementById("song-composer").contentEditable = "false";
 				document.querySelectorAll(".beat").forEach((beat) => {
 					beat.contentEditable = "false";
 				});
 			}
+		};
+
+		document.getElementById("song-title").oninput = (event) => {
+			aim.songManager.updateField("title", document.getElementById("song-title").textContent);
+		};
+
+		document.getElementById("song-composer").oninput = (event) => {
+			aim.songManager.updateField("composer", document.getElementById("song-composer").textContent);
 		};
 
 		document.getElementById("buttonPlaySong").onclick = (event) => {
@@ -248,19 +261,26 @@ aim.SongPageController = class {
 			// TODO: link to bpm
 		};
 
+
+
 		aim.songManager.beginListening(this.updateView.bind(this));
+
+		const viewSetupInterval = setInterval(() => {
+			if (aim.songManager._documentSnapshot) {
+				document.getElementById("inputBPM").value = aim.songManager.tempo;
+				if (aim.authManager.uid === aim.songManager.author) {
+					document.getElementById("buttonEditMode").style.display = "block";
+				}
+				console.log("Setting up page now");
+				clearInterval(viewSetupInterval);
+			}
+		}, 100);
 	}
 
 	updateView() {
 		this._createMeasures();
 		this._populateMeasures();
 		this._populateMetadata();
-
-		document.getElementById("inputBPM").value = aim.songManager.tempo;
-
-		if (aim.authManager.uid === aim.songManager.author) {
-			document.getElementById("buttonEditMode").style.display = "block";
-		}
 	}
 
 	_populateMetadata() {
@@ -527,3 +547,5 @@ aim.main = function () {
 };
 
 aim.main();
+
+
