@@ -215,7 +215,6 @@ aim.SongPageController = class {
 
 		document.getElementById("buttonEditMode").onclick = (event) => {
 			if (aim.authManager.uid === aim.songManager.author) {
-				console.log("Switching to edit mode");
 				document.getElementById("buttonPerformanceMode").style.display = "block";
 				document.getElementById("buttonEditMode").style.display = "none";
 				document.querySelector(".dropdown-menu").style.left = "-180px";
@@ -229,7 +228,6 @@ aim.SongPageController = class {
 
 		document.getElementById("buttonPerformanceMode").onclick = (event) => {
 			if (aim.authManager.uid === aim.songManager.author) {
-				console.log("Switching to performance mode");
 				document.getElementById("buttonPerformanceMode").style.display = "none";
 				document.getElementById("buttonEditMode").style.display = "block";
 				document.querySelector(".dropdown-menu").style.left = "-128px";
@@ -272,7 +270,6 @@ aim.SongPageController = class {
 					if (aim.authManager.uid === aim.songManager.author) {
 						document.getElementById("buttonEditMode").style.display = "block";
 					}
-					console.log("Setting up page now");
 					clearInterval(viewSetupInterval);
 				}
 			} catch(error) { }

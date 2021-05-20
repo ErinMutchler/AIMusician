@@ -425,6 +425,9 @@ musician.BassPlayer = class {
           this.BASS_SAMPLES[str + "2"].pause();
           this.BASS_SAMPLES[str + "2"].currentTime = 0;
           this.BASS_SAMPLES[str + "2"].play();
+          if (index === line.length - 1) {
+            this.stopSong();
+          }
         }, (60 / bpm) * 1000 * index);
       });
     } catch (error) {
@@ -481,11 +484,9 @@ musician.BassPlayer = class {
 
   createSample(filename) {
     const audioElement = document.createElement('audio');
-    console.log("../assets/bass-samples/" + filename);
     audioElement.src = "../assets/bass-samples/" + filename;
     const mediaElement = musician.AUDIO_CONTEXT.createMediaElementSource(audioElement);
     mediaElement.connect(musician.AUDIO_CONTEXT.destination);
-    console.log(audioElement);
     return audioElement;
   }
 
