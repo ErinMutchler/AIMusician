@@ -295,105 +295,62 @@ theory.Chord = class {
   }
 }
 
+musician.AUDIO_CONTEXT = new AudioContext();
+
 musician.BassPlayer = class {
   constructor() {
-
-    this.sampler = new Tone.Player("../assets/bass-samples/E1.mp3", () => {
-      console.log("Sampler Loaded");
-    });
-    this.sampler.toDestination();
-    this.audioBuffers = new Tone.ToneAudioBuffers({
-      urls: {
-        ["E1"]: "E1.mp3",
-        ["F1"]: "F1.mp3",
-        ["F#1"]: "F#1.mp3",
-        ["G1"]: "G1.mp3",
-        ["G#1"]: "G#1.mp3",
-        ["A1"]: "A1.mp3",
-        ["A#1"]: "A#1.mp3",
-        ["B1"]: "B1.mp3",
-        ["C2"]: "C2.mp3",
-        ["C#2"]: "C#2.mp3",
-        ["D2"]: "D2.mp3",
-        ["D#2"]: "D#2.mp3",
-        ["E2"]: "E2.mp3",
-        ["F2"]: "F2.mp3",
-        ["F#2"]: "F#2.mp3",
-        ["G2"]: "G2.mp3",
-        ["G#2"]: "G#2.mp3",
-        ["A2"]: "A2.mp3",
-        ["A#2"]: "A#2.mp3",
-        ["B2"]: "B2.mp3",
-        ["C3"]: "C3.mp3",
-        ["C#3"]: "C#3.mp3",
-        ["D3"]: "D3.mp3",
-        ["D#3"]: "D#3.mp3",
-        ["E3"]: "E3.mp3",
-        ["F3"]: "F3.mp3",
-        ["F#3"]: "F#3.mp3",
-        ["G3"]: "G3.mp3",
-        ["G#3"]: "G#3.mp3",
-        ["A3"]: "A3.mp3",
-        ["A#3"]: "A#3.mp3",
-        ["B3"]: "B3.mp3",
-        ["C4"]: "C4.mp3",
-      },
-      onload: () => console.log("urls loaded"),
-      baseUrl: "https://erinmutchler.com/bass-samples/"
-    });
-    //
-    // this.players = new Tone.Players({
-    //   urls: {
-    //     ["E1"]: "E1.mp3",
-    //     ["F1"]: "F1.mp3",
-    //     ["F#1"]: "F#1.mp3",
-    //     ["G1"]: "G1.mp3",
-    //     ["G#1"]: "G#1.mp3",
-    //     ["A1"]: "A1.mp3",
-    //     ["A#1"]: "A#1.mp3",
-    //     ["B1"]: "B1.mp3",
-    //     ["C2"]: "C2.mp3",
-    //     ["C#2"]: "C#2.mp3",
-    //     ["D2"]: "D2.mp3",
-    //     ["D#2"]: "D#2.mp3",
-    //     ["E2"]: "E2.mp3",
-    //     ["F2"]: "F2.mp3",
-    //     ["F#2"]: "F#2.mp3",
-    //     ["G2"]: "G2.mp3",
-    //     ["G#2"]: "G#2.mp3",
-    //     ["A2"]: "A2.mp3",
-    //     ["A#2"]: "A#2.mp3",
-    //     ["B2"]: "B2.mp3",
-    //     ["C3"]: "C3.mp3",
-    //     ["C#3"]: "C#3.mp3",
-    //     ["D3"]: "D3.mp3",
-    //     ["D#3"]: "D#3.mp3",
-    //     ["E3"]: "E3.mp3",
-    //     ["F3"]: "F3.mp3",
-    //     ["F#3"]: "F#3.mp3",
-    //     ["G3"]: "G3.mp3",
-    //     ["G#3"]: "G#3.mp3",
-    //     ["A3"]: "A3.mp3",
-    //     ["A#3"]: "A#3.mp3",
-    //     ["B3"]: "B3.mp3",
-    //     ["C4"]: "C4.mp3",
-    //   },
-    //   baseUrl: "../assets/bass-samples/",
-    //   onload: () => {
-    //     console.log("done loading");
-    //   }
-    // }).toDestination();
     this.isPlaying = false;
-    this.synth = new Tone.Synth().toDestination();
+    this.songTimers = [];
+
+    this.DRUM_LOOP = this.createSample("../drum-samples/swing_loop_182bpm.wav");
+    this.DRUM_LOOP.volume = 0.5;
+
+    this.BASS_SAMPLES = {
+      ["E1"]: this.createSample("E1.mp3"),
+      ["F1"]: this.createSample("F1.mp3"),
+      ["F#1"]: this.createSample("Fs1.mp3"),
+      ["G1"]: this.createSample("G1.mp3"),
+      ["G#1"]: this.createSample("Gs1.mp3"),
+      ["A1"]: this.createSample("A1.mp3"),
+      ["A#1"]: this.createSample("As1.mp3"),
+      ["B1"]: this.createSample("B1.mp3"),
+      ["C2"]: this.createSample("C2.mp3"),
+      ["C#2"]: this.createSample("Cs2.mp3"),
+      ["D2"]: this.createSample("D2.mp3"),
+      ["D#2"]: this.createSample("Ds2.mp3"),
+      ["E2"]: this.createSample("E2.mp3"),
+      ["F2"]: this.createSample("F2.mp3"),
+      ["F#2"]: this.createSample("Fs2.mp3"),
+      ["G2"]: this.createSample("G2.mp3"),
+      ["G#2"]: this.createSample("Gs2.mp3"),
+      ["A2"]: this.createSample("A2.mp3"),
+      ["A#2"]: this.createSample("As2.mp3"),
+      ["B2"]: this.createSample("B2.mp3"),
+      ["C3"]: this.createSample("C3.mp3"),
+      ["C#3"]: this.createSample("Cs3.mp3"),
+      ["D3"]: this.createSample("D3.mp3"),
+      ["D#3"]: this.createSample("Ds3.mp3"),
+      ["E3"]: this.createSample("E3.mp3"),
+      ["F3"]: this.createSample("F3.mp3"),
+      ["F#3"]: this.createSample("Fs3.mp3"),
+      ["G3"]: this.createSample("G3.mp3"),
+      ["G#3"]: this.createSample("Gs3.mp3"),
+      ["A3"]: this.createSample("A3.mp3"),
+      ["A#3"]: this.createSample("As3.mp3"),
+      ["B3"]: this.createSample("B3.mp3"),
+      ["C4"]: this.createSample("C4.mp3"),
+    };
   }
 
   playSong(chords, bpm) {
-    this.sampler.start();
-    return;
+    if (musician.AUDIO_CONTEXT.state === 'suspended') {
+      musician.AUDIO_CONTEXT.resume();
+    }
 
     if (this.isPlaying) {
       return;
     }
+
     try {
       this.isPlaying = true;
       let line = [];
@@ -453,19 +410,22 @@ musician.BassPlayer = class {
         });
       });
 
-      const now = Tone.now()
-      Tone.Transport.bpm.value = bpm;
-      let time = Tone.now();
-
-      Tone.Transport.start();
-
-      this.synth = new Tone.Synth().toDestination();
-
       line.forEach((note, index) => {
-        let str = note.symbol.replace("♭", "b").replace("♯", "#").replace("♮", "");
-        console.log(note.symbol);
-        this.synth.triggerAttackRelease(str + "2", "4n", time);
-        time = time + Tone.Time("4n");
+        this.songTimers[index] = setTimeout(() => {
+          if (index % 4 === 0) {
+            this.DRUM_LOOP.playbackRate = bpm / 182;
+            this.DRUM_LOOP.pause();
+            this.DRUM_LOOP.currentTime = 0;
+            this.DRUM_LOOP.play();
+          }
+
+          let str = note.symbol.replace("♭", "b").replace("♯", "#").replace("♮", "")
+            .replace("Cb", "B").replace("Db", "C#").replace("Eb", "D#").replace("Fb", "E").replace("Gb","F#").replace("Ab", "G#").replace("Bb", "A#");
+          this.BASS_SAMPLES[str + "2"].playbackRate = 2;
+          this.BASS_SAMPLES[str + "2"].pause();
+          this.BASS_SAMPLES[str + "2"].currentTime = 0;
+          this.BASS_SAMPLES[str + "2"].play();
+        }, (60 / bpm) * 1000 * index);
       });
     } catch (error) {
       this.stopSong()
@@ -474,8 +434,19 @@ musician.BassPlayer = class {
   }
 
   stopSong() {
+    this.songTimers.forEach((songTimer) => {
+      if (songTimer) {
+        clearTimeout(songTimer);
+      }
+    });
+
+    this.DRUM_LOOP.pause();
+    this.DRUM_LOOP.currentTime = 0;
+    for(let i =0; i < this.BASS_SAMPLES.length; ++i) {
+      this.BASS_SAMPLES[i].pause();
+      this.BASS_SAMPLES[i].currentTime = 0;
+    }
     this.isPlaying = false;
-    this.synth.dispose();
   }
 
   LT(chord) {
@@ -507,6 +478,18 @@ musician.BassPlayer = class {
     let bDegree = chord.getScaleDegreeOfNote(b);
     return chord.getNoteAtScaleDegree(((Math.floor((aDegree + bDegree) / 2)) % 7) + 1);
   }
+
+  createSample(filename) {
+    const audioElement = document.createElement('audio');
+    console.log("../assets/bass-samples/" + filename);
+    audioElement.src = "../assets/bass-samples/" + filename;
+    const mediaElement = musician.AUDIO_CONTEXT.createMediaElementSource(audioElement);
+    mediaElement.connect(musician.AUDIO_CONTEXT.destination);
+    console.log(audioElement);
+    return audioElement;
+  }
+
+
 }
 
 theory.MODE_SYMBOLS = {

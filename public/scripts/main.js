@@ -266,14 +266,16 @@ aim.SongPageController = class {
 		aim.songManager.beginListening(this.updateView.bind(this));
 
 		const viewSetupInterval = setInterval(() => {
-			if (aim.songManager._documentSnapshot) {
-				document.getElementById("inputBPM").value = aim.songManager.tempo;
-				if (aim.authManager.uid === aim.songManager.author) {
-					document.getElementById("buttonEditMode").style.display = "block";
+			try {
+				if (aim.songManager._documentSnapshot) {
+					document.getElementById("inputBPM").value = aim.songManager.tempo;
+					if (aim.authManager.uid === aim.songManager.author) {
+						document.getElementById("buttonEditMode").style.display = "block";
+					}
+					console.log("Setting up page now");
+					clearInterval(viewSetupInterval);
 				}
-				console.log("Setting up page now");
-				clearInterval(viewSetupInterval);
-			}
+			} catch(error) { }
 		}, 100);
 	}
 
