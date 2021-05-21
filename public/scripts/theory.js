@@ -420,7 +420,6 @@ musician.BassPlayer = class {
         this.songTimers[index] = setTimeout(() => {
           if (index % 4 === 0) {
             this.DRUM_LOOP.playbackRate = bpm / 182;
-            console.log(this.DRUM_LOOP.playbackRate);
             this.DRUM_LOOP.pause();
             this.DRUM_LOOP.currentTime = 0;
             this.DRUM_LOOP.play();
