@@ -302,8 +302,14 @@ musician.BassPlayer = class {
     this.isPlaying = false;
     this.songTimers = [];
 
-    this.DRUM_LOOP = this.createSample("../drum-samples/swing_loop_182bpm.wav");
+    this.DRUM_LOOP = this.createSample("../drum-samples/swing_loop_182bpm.mp3");
     this.DRUM_LOOP.volume = 0.5;
+
+    // this.DRUM_LOOPS = {
+    //   ["1"]: this.createSample("../drum-samples/swing_loop_182bpm.mp3"),
+    //   ["2"]: this.createSample("../drum-samples/swing_loop_182bpm.mp3"),
+    //   ["3"]: this.createSample("../drum-samples/swing_loop_182bpm.mp3"),
+    // }
 
     this.BASS_SAMPLES = {
       ["E1"]: this.createSample("E1.mp3"),
@@ -414,6 +420,7 @@ musician.BassPlayer = class {
         this.songTimers[index] = setTimeout(() => {
           if (index % 4 === 0) {
             this.DRUM_LOOP.playbackRate = bpm / 182;
+            console.log(this.DRUM_LOOP.playbackRate);
             this.DRUM_LOOP.pause();
             this.DRUM_LOOP.currentTime = 0;
             this.DRUM_LOOP.play();
@@ -421,7 +428,7 @@ musician.BassPlayer = class {
 
           let str = note.symbol.replace("♭", "b").replace("♯", "#").replace("♮", "")
             .replace("Cb", "B").replace("Db", "C#").replace("Eb", "D#").replace("Fb", "E").replace("Gb","F#").replace("Ab", "G#").replace("Bb", "A#");
-          this.BASS_SAMPLES[str + "2"].playbackRate = 2;
+          this.BASS_SAMPLES[str + "2"].playbackRate = bpm / 60;
           this.BASS_SAMPLES[str + "2"].pause();
           this.BASS_SAMPLES[str + "2"].currentTime = 0;
           this.BASS_SAMPLES[str + "2"].play();
@@ -489,8 +496,6 @@ musician.BassPlayer = class {
     mediaElement.connect(musician.AUDIO_CONTEXT.destination);
     return audioElement;
   }
-
-
 }
 
 theory.MODE_SYMBOLS = {
