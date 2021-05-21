@@ -151,6 +151,8 @@ aim.ListPageController = class {
 			document.getElementById("song-list").appendChild(this.createListItem(song, index));
 		});
 	}
+
+
 }
 
 aim.SongListManager = class {
@@ -213,10 +215,15 @@ aim.SongPageController = class {
 		this.selectedBeat = null;
 		aim.bassPlayer = new musician.BassPlayer();
 
+		document.getElementById("buttonSignOut").onclick = (event) => {
+			aim.authManager.signOut();
+		};
+
 		document.getElementById("buttonEditMode").onclick = (event) => {
 			if (aim.authManager.uid === aim.songManager.author) {
 				document.getElementById("buttonPerformanceMode").style.display = "block";
 				document.getElementById("buttonEditMode").style.display = "none";
+				document.getElementById("buttonOpenDeleteModal").style.display = "block";
 				document.querySelector(".dropdown-menu").style.left = "-180px";
 				document.getElementById("song-title").contentEditable = "true";
 				document.getElementById("song-composer").contentEditable = "true";
@@ -229,12 +236,23 @@ aim.SongPageController = class {
 		document.getElementById("buttonPerformanceMode").onclick = (event) => {
 			if (aim.authManager.uid === aim.songManager.author) {
 				document.getElementById("buttonPerformanceMode").style.display = "none";
+				document.getElementById("buttonOpenDeleteModal").style.display = "none";
 				document.getElementById("buttonEditMode").style.display = "block";
 				document.querySelector(".dropdown-menu").style.left = "-128px";
 				document.getElementById("song-title").contentEditable = "false";
 				document.getElementById("song-composer").contentEditable = "false";
 				document.querySelectorAll(".beat").forEach((beat) => {
 					beat.contentEditable = "false";
+				});
+			}
+		};
+
+		document.getElementById("buttonDeleteSong").onclick = event => {
+			if (aim.authManager.uid === aim.songManager.author) {
+				aim.songManager.delete().then(() => {
+					window.location.href = "/list.html";
+				}).catch((error) => {
+					console.log(error);
 				});
 			}
 		};
@@ -254,12 +272,6 @@ aim.SongPageController = class {
 		document.getElementById("buttonStopSong").onclick = (event) => {
 			aim.bassPlayer.stopSong();
 		};
-
-		document.getElementById("inputBPM").oninput = (event) => {
-			// TODO: link to bpm
-		};
-
-
 
 		aim.songManager.beginListening(this.updateView.bind(this));
 
@@ -402,6 +414,10 @@ aim.SongManager = class {
 		}).catch((error) => {
 			console.log(error);
 		});
+	}
+
+	delete() {
+		return this._ref.delete();
 	}
 
 	get title() {

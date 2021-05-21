@@ -22,6 +22,23 @@ body {
     flex-direction: column;
 }
 
+nav {
+    background-color: rgb(44, 147, 137);
+}
+
+.list-group-item-dark {
+    background-color: rgb(112, 147, 144);
+}
+
+.list-group-item-light:hover, .list-group-item-light:focus {
+    background-color: #bdbdbd!important;
+    color: #454545 !important;
+}
+
+.navbar-brand {
+    color:white;
+}
+
 main {
     margin-top: 80px;
     flex: 1 0 auto;
@@ -137,6 +154,6 @@ footer {
     }
 }
 
-#buttonEditMode, #buttonPerformanceMode {
+#buttonEditMode, #buttonPerformanceMode, #buttonOpenDeleteModal {
     display: none;
 }
