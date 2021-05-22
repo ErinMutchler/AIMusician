@@ -19,7 +19,6 @@
             <i class="material-icons"> more_vert </i>
         </button>
         <div class="dropdown-menu" aria-labelledby="lr1">
-            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalNewSong"> <i class="material-icons mr-2"> add </i> New Song </button>
             <button class="dropdown-item" type="button" id="buttonEditMode"> <i class="material-icons mr-2"> edit </i> Edit Mode </button>
             <button class="dropdown-item" type="button" id="buttonOpenDeleteModal" data-toggle="modal" data-target="#modalDeleteSong"> <i class="material-icons mr-2"> delete </i> Delete Song </button>
             <button class="dropdown-item" type="button" id="buttonPerformanceMode"> <i class="material-icons mr-2"> speaker </i> Performance Mode </button>
@@ -51,39 +50,6 @@
         <i class="material-icons"> stop </i>
     </button>
 </footer>
-
-<div class="modal fade" id="modalNewSong" tabindex="-1" role="dialog" aria-label="New song modal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"> Create a new song </h5>
-            </div>
-
-            <div class="modal-body">
-                <div class="form-group bmd-form-group">
-                    <label for="inputTitle"> Title: </label>
-                    <input type="text" class="form-control" id="inputTitle" placeholder="Song title">
-                </div>
-                <div class="form-group bmd-form-group">
-                    <label for="inputComposer"> Composer: </label>
-                    <input type="text" class="form-control" id="inputComposer" placeholder="Song composer">
-                </div>
-                <div class="form-group bmd-form-group">
-                    <label for="inputLength"> Length </label>
-                    <input type="number" class="form-control" id="inputLength" placeholder="Song length">
-                </div>
-                <div class="form-group bmd-form-group">
-                    <label for="inputTempo"> BPM: </label>
-                    <input type="number" class="form-control" id="inputTempo" placeholder="Song tempo">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn" data-dismiss="modal"> CANCEL </button>
-                <button id="buttonCreateSong" type="button" class="btn" data-dismiss="modal"> CREATE </button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="modal fade" id="modalDeleteSong" tabindex="-1" role="dialog" aria-label="Delete song" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

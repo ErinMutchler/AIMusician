@@ -261,6 +261,15 @@ theory.Chord = class {
     return this.root.addInterval(theory.MODE_DICTIONARY[this.mode][(scaleDegree - 1) % 7]);
   }
 
+  isChordTone(note) {
+    for (let i = 0; i < theory.MODE_DICTIONARY[this.mode].length; ++i) {
+      if (this.root.addInterval(theory.MODE_DICTIONARY[this.mode][i]).value === note.value) {
+        return true
+      }
+    }
+    return false;
+  }
+
   getScaleDegreeOfNote(note) {
     for (let i = 0; i < theory.MODE_DICTIONARY[this.mode].length; ++i) {
       if (this.root.addInterval(theory.MODE_DICTIONARY[this.mode][i]).value === note.value) {
@@ -302,7 +311,7 @@ musician.BassPlayer = class {
     this.isPlaying = false;
     this.songTimers = [];
 
-    this.DRUM_LOOP = this.createSample("../drum-samples/swing_loop_182bpm.mp3");
+    this.DRUM_LOOP = this.createSample("../drum-samples/swing_loop_182bpm.wav");
     this.DRUM_LOOP.volume = 0.5;
 
     // this.DRUM_LOOPS = {
@@ -464,7 +473,7 @@ musician.BassPlayer = class {
     leadingTones.push(chord.root.subtractInterval(theory.INTERVALS.m2));
     leadingTones.push(chord.getNoteAtScaleDegree(2));
 
-    leadingTones.push(chord.getNoteAtScaleDegree(5));
+    // leadingTones.push(chord.getNoteAtScaleDegree(5));
     leadingTones.push(chord.getNoteAtScaleDegree(7));
     return leadingTones[Math.floor(Math.random() * leadingTones.length)];
   }
@@ -483,8 +492,8 @@ musician.BassPlayer = class {
   }
 
   HB(chord, a, b) {
-    let aDegree = chord.getScaleDegreeOfNote(a);
-    let bDegree = chord.getScaleDegreeOfNote(b);
+    let aDegree = chord.isChordTone(a) ? chord.getScaleDegreeOfNote(a) : chord.getScaleDegreeOfNote(this.NCT(chord, a));
+    let bDegree = chord.isChordTone(b) ? chord.getScaleDegreeOfNote(b) : chord.getScaleDegreeOfNote(this.NCT(chord, b));
     return chord.getNoteAtScaleDegree(((Math.floor((aDegree + bDegree) / 2)) % 7) + 1);
   }
 
